@@ -1,0 +1,10 @@
+{
+  "description": "This web application offers a sleek platform for tech enthusiasts to explore and purchase prebuilt PCs and computer parts, featuring user-friendly navigation and account management.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

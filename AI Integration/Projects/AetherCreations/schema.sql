@@ -1,0 +1,42 @@
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    uid VARCHAR(128) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    full_name VARCHAR(255) NOT NULL,
+    shipping_address JSONB DEFAULT '{}',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(120) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    type VARCHAR(80) NOT NULL,
+    price INTEGER NOT NULL,
+    photo VARCHAR(255) NOT NULL,
+    label VARCHAR(50) NOT NULL,
+    stock INTEGER DEFAULT (1),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+    status VARCHAR(50) DEFAULT 'processing',
+    subtotal INTEGER NOT NULL,
+    shipping_cost INTEGER NOT NULL,
+    total_amount INTEGER NOT NULL,
+    shipping_address JSONB DEFAULT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+    id SERIAL PRIMARY KEY,
+    order_id INTEGER REFERENCES orders(id) ON DELETE CASCADE,
+    product_id INTEGER REFERENCES products(id),
+    quantity INTEGER NOT NULL DEFAULT 1,
+    unit_price INTEGER NOT NULL
+);
+
+
+
